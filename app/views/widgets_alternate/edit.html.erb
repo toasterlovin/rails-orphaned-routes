@@ -1,6 +1,12 @@
+<% content_for :title, "Editing widget" %>
+
 <h1>Editing widget</h1>
 
-<%= render 'form' %>
+<%= render "form", widget: @widget %>
 
-<%= link_to 'Show', @widget %> |
-<%= link_to 'Back', widgets_path %>
+<br>
+
+<div>
+  <%= link_to "Show this widget", @widget %> |
+  <%= link_to "Back to widgets", widgets_path %>
+</div>

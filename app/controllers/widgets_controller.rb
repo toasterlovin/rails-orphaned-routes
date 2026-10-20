@@ -1,5 +1,5 @@
 class WidgetsController < ApplicationController
-  before_action :set_widget, only: [:show, :edit, :update, :destroy]
+  before_action :set_widget, only: %i[ show edit update destroy ]
 
   def index
     @widgets = Widget.all
@@ -18,38 +18,32 @@ class WidgetsController < ApplicationController
   def create
     @widget = Widget.new(widget_params)
 
-    respond_to do |format|
-      if @widget.save
-        format.html { redirect_to @widget, notice: 'Widget was successfully created.' }
-      else
-        format.html { render :new }
-      end
+    if @widget.save
+      redirect_to @widget, notice: "Widget was successfully created."
+    else
+      render :new, status: :unprocessable_content
     end
   end
 
   def update
-    respond_to do |format|
-      if @widget.update(widget_params)
-        format.html { redirect_to @widget, notice: 'Widget was successfully updated.' }
-      else
-        format.html { render :edit }
-      end
+    if @widget.update(widget_params)
+      redirect_to @widget, notice: "Widget was successfully updated.", status: :see_other
+    else
+      render :edit, status: :unprocessable_content
     end
   end
 
   def destroy
-    @widget.destroy
-    respond_to do |format|
-      format.html { redirect_to widgets_url, notice: 'Widget was successfully destroyed.' }
-    end
+    @widget.destroy!
+    redirect_to widgets_path, notice: "Widget was successfully destroyed.", status: :see_other
   end
 
   private
     def set_widget
-      @widget = Widget.find(params[:id])
+      @widget = Widget.find(params.expect(:id))
     end
 
     def widget_params
-      params.require(:widget).permit(:name)
+      params.expect(widget: [ :name ])
     end
 end

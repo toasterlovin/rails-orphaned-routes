@@ -1,9 +1,10 @@
-<p id="notice"><%= notice %></p>
+<p style="color: green"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @widget.name %>
-</p>
+<%= render @widget %>
 
-<%= link_to 'Edit', edit_widget_path(@widget) %> |
-<%= link_to 'Back', widgets_path %>
+<div>
+  <%= link_to "Edit this widget", edit_widget_path(@widget) %> |
+  <%= link_to "Back to widgets", widgets_path %>
+
+  <%= button_to "Destroy this widget", @widget, method: :delete %>
+</div>

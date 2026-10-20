@@ -1,9 +1,10 @@
-<p id="notice"><%= notice %></p>
+<p style="color: green"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @thing.name %>
-</p>
+<%= render @thing %>
 
-<%# <%= link_to 'Edit', edit_thing_path(@thing) %1> | %>
-<%= link_to 'Back', things_path %>
+<div>
+  <%#= link_to "Edit this thing", edit_thing_path(@thing) %> |
+  <%= link_to "Back to things", things_path %>
+
+  <%= button_to "Destroy this thing", @thing, method: :delete %>
+</div>

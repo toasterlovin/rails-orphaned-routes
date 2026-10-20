@@ -1,2 +1,2 @@
-class Widget < ActiveRecord::Base
+class Widget < ApplicationRecord
 end

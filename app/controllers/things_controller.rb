@@ -1,5 +1,5 @@
 class ThingsController < ApplicationController
-  before_action :set_thing, only: [:show, :edit, :update, :destroy]
+  before_action :set_thing, only: %i[ show edit update destroy ]
 
   def index
     @things = Thing.all
@@ -18,38 +18,32 @@ class ThingsController < ApplicationController
   def create
     @thing = Thing.new(thing_params)
 
-    respond_to do |format|
-      if @thing.save
-        format.html { redirect_to @thing, notice: 'Thing was successfully created.' }
-      else
-        format.html { render :new }
-      end
+    if @thing.save
+      redirect_to @thing, notice: "Thing was successfully created."
+    else
+      render :new, status: :unprocessable_content
     end
   end
 
   def update
-    respond_to do |format|
-      if @thing.update(thing_params)
-        format.html { redirect_to @thing, notice: 'Thing was successfully updated.' }
-      else
-        format.html { render :edit }
-      end
+    if @thing.update(thing_params)
+      redirect_to @thing, notice: "Thing was successfully updated.", status: :see_other
+    else
+      render :edit, status: :unprocessable_content
     end
   end
 
   def destroy
-    @thing.destroy
-    respond_to do |format|
-      format.html { redirect_to things_url, notice: 'Thing was successfully destroyed.' }
-    end
+    @thing.destroy!
+    redirect_to things_path, notice: "Thing was successfully destroyed.", status: :see_other
   end
 
   private
     def set_thing
-      @thing = Thing.find(params[:id])
+      @thing = Thing.find(params.expect(:id))
     end
 
     def thing_params
-      params.require(:thing).permit(:name)
+      params.expect(thing: [ :name ])
     end
 end

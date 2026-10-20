@@ -1,25 +1,16 @@
-<h1>Listing things</h1>
+<p style="color: green"><%= notice %></p>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<% content_for :title, "Things" %>
 
-  <tbody>
-    <% @things.each do |thing| %>
-      <tr>
-        <td><%= thing.name %></td>
-        <td><%= link_to 'Show', thing %></td>
-        <%# <td><%= link_to 'Edit', edit_thing_path(thing) %1></td> %>
-        <td><%= link_to 'Destroy', thing, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<h1>Things</h1>
 
-<br>
+<div id="things">
+  <% @things.each do |thing| %>
+    <%= render thing %>
+    <p>
+      <%= link_to "Show this thing", thing %>
+    </p>
+  <% end %>
+</div>
 
-<%= link_to 'New Thing', new_thing_path %>
+<%= link_to "New thing", new_thing_path %>

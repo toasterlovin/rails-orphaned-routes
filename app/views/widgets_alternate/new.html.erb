@@ -1,5 +1,11 @@
+<% content_for :title, "New widget" %>
+
 <h1>New widget</h1>
 
-<%= render 'form' %>
+<%= render "form", widget: @widget %>
 
-<%= link_to 'Back', widgets_path %>
+<br>
+
+<div>
+  <%= link_to "Back to widgets", widgets_path %>
+</div>
